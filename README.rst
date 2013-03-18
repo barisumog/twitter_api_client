@@ -4,7 +4,7 @@ twitter_api_client
 A simple and direct interface to the Twitter APIs in Python 3.
 
 **twitter_api_client** is a concise tool for calling the
-Twitter APIs. It's main purpose is testing and CLI scripting,
+Twitter APIs. Its main purpose is testing and CLI scripting,
 so it merely handles the OAuth protocol, leaving everything else
 as raw as possible. It doesn't wrap the responses into custom objects.
 It doesn't obscure the request parameters.
@@ -66,6 +66,8 @@ Examples
 
 https://dev.twitter.com/docs/api/1.1/get/trends/place
 
+::
+
     import twitter_api_client as tac
     base_url = "https://api.twitter.com/1.1/trends/place.json"
     method = "GET"
@@ -76,6 +78,8 @@ https://dev.twitter.com/docs/api/1.1/get/trends/place
 
 https://dev.twitter.com/docs/api/1.1/get/search/tweets
 
+::
+
     import twitter_api_client as tac
     base_url = "https://api.twitter.com/1.1/search/tweets.json"
     method = "GET"
@@ -85,6 +89,8 @@ https://dev.twitter.com/docs/api/1.1/get/search/tweets
 **Post a tweet for the authenticated user**
 
 https://dev.twitter.com/docs/api/1.1/post/statuses/update
+
+::
 
     import twitter_api_client as tac
     base_url = "https://api.twitter.com/1.1/statuses/update.json"
