@@ -6,7 +6,7 @@ A simple and direct interface to the Twitter APIs in Python 3.
 **twitter_api_client** is a concise tool for calling the
 Twitter APIs. It's main purpose is testing and CLI scripting,
 so it merely handles the OAuth protocol, leaving everything else
-as raw possible. It doesn't wrap the responses into custom objects.
+as raw as possible. It doesn't wrap the responses into custom objects.
 It doesn't obscure the request parameters.
 
 Requirements
@@ -19,7 +19,7 @@ You must, however, have a valid consumer key and secret,
 as well as an access token and secret.
 
 You can create an app at https://dev.twitter.com/apps
-From there, you can obtain your consumer and access token credentials.
+. From there, you can obtain your consumer and access token credentials.
 
 Please make sure to setup your app with the appropriate permissions.
 If you will be using POST APIs (e.g. tweeting), you must choose the
@@ -51,10 +51,13 @@ and ends with ``.json``
 ``method`` Either **GET** or **POST**. Detailed list of resources
 and methods at https://dev.twitter.com/docs/api/1.1
 
-``params`` Dictionary of query parameters for **GET** requests.
+``params`` Dictionary of parameters for **GET** requests.
 
 ``post_data`` Dictionary of parameters for **POST** requests. Empty by
 default, so can be omitted for GET requests.
+
+All API calls return the full JSON response, converted into a Python
+dictionary or list.
 
 Examples
 --------
@@ -63,11 +66,34 @@ Examples
 
 https://dev.twitter.com/docs/api/1.1/get/trends/place
 
-::
     import twitter_api_client as tac
     base_url = "https://api.twitter.com/1.1/trends/place.json"
     method = "GET"
     params = {"id": "1"}
     response = tac.api_call(base_url, method, params)
 
+**Search for tweets**
 
+https://dev.twitter.com/docs/api/1.1/get/search/tweets
+
+    import twitter_api_client as tac
+    base_url = "https://api.twitter.com/1.1/search/tweets.json"
+    method = "GET"
+    params = {"q": "python", "result_type": "recent", "count": "20"}
+    response = tac.api_call(base_url, method, params)
+
+**Post a tweet for the authenticated user**
+
+https://dev.twitter.com/docs/api/1.1/post/statuses/update
+
+    import twitter_api_client as tac
+    base_url = "https://api.twitter.com/1.1/statuses/update.json"
+    method = "POST"
+    params = {}
+    post_data = {"status": "I ate my cat for breakfast!"}
+    response = tac.api_call(base_url, method, params, post_data)
+
+License
+-------
+
+**twitter_api_client** is open sourced under GPLv3.
