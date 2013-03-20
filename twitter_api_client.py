@@ -29,6 +29,7 @@ import hmac
 import hashlib
 import base64
 import json
+import sys      # only used for printing when run as script
 
 
 # The below dictionary must be filled with the consumer and
@@ -129,19 +130,26 @@ def api_call(base_url, method, params, post_data={}):
     return json.loads(response.decode())
 
 
+# A printer to be used when run as script
+
+def careful_print(text):
+    """Prints text, checking for unicode errors."""
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        ptext = "{}\n".format(text).encode()
+        sys.stdout.buffer.write(ptext)
+
+
 if __name__ == "__main__":
     # Just a quick test to retrieve the current TTs.
     # Since the TTs could contain characters not included in
-    # the default system encoding, using print could raise
-    # an error, even if the API call worked fine.
-    # To prevent this, we'll use sys.stdout.buffer.write
-    # instead of print. Some garbled text is expected. =)
-    import sys
+    # the default system encoding, so using the above printer
+    # function. Occasional garbled text is expected. =)
     print("Requesting the Trending Topics...")
     base_url = "https://api.twitter.com/1.1/trends/place.json"
     method = "GET"
     params = {"id": "1"}    # worldwide TTs
     response = api_call(base_url, method, params)
     for tt in response[0]["trends"]:
-        tt_text = "{}\n".format(tt["name"]).encode()
-        sys.stdout.buffer.write(tt_text)
+        careful_print(tt["name"])
